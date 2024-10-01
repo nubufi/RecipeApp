@@ -1,0 +1,10 @@
+.gitignore
+.git
+README.md
+app/__pycache__
+app/*/__pycache__
+app/*/*/__pycache__
+app/*/*/*/__pycache__
+.env/
+.docker
+.flake8
