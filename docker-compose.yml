@@ -4,7 +4,31 @@ services:
       context: .
     ports:
       - "8000:8000"
+    depends_on:
+      - db
     volumes:
       - ./app:/app
     command: >
-      sh -c "python manage.py runserver 0.0.0.:8000"
+      sh -c "python manage.py wait_db &&
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=recipes
+      - DB_USER=user
+      - DB_PASS=password
+
+  db:
+    image: postgres:15-alpine
+    container_name: recipe-db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: recipes
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

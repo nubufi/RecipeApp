@@ -8,3 +8,5 @@ app/*/*/*/__pycache__
 .env/
 .docker
 .flake8
+pyrightconfig.json
+
